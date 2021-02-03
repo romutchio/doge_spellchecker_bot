@@ -5,10 +5,9 @@ description = ""
 authors = ["romutchio <budljanskiy@mail.ru>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 language-tool-python = "^2.5.2"
 pyTelegramBotAPI = "^3.7.6"
-poetry = "^1.1.4"
 pydantic = "^1.7.3"
 
 [tool.poetry.dev-dependencies]
