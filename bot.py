@@ -1,10 +1,17 @@
 from config import settings
 
 import telebot
+import random
 import language_tool_python
+from telebot.types import Sticker
 
 bot = telebot.TeleBot(settings.TELEGRAM_TOKEN)
 tool = language_tool_python.LanguageToolPublicAPI('ru-RU')
+
+sticker_set = bot.get_sticker_set('Stickerms')
+
+if sticker_set:
+	stickers = sticker_set.stickers
 
 
 def letter_counter(text: str, letter: str = 'м'):
@@ -23,8 +30,20 @@ def contains_misspelling(text: str):
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
 	if contains_misspelling(message.text):
-		photo = open('doge.jpg', 'rb')
-		bot.send_photo(message.chat.id, photo, reply_to_message_id=message.message_id)
+		if sticker_set:
+			sticker: Sticker = random.choice(sticker_set.stickers)
+			bot.send_sticker(
+				message.chat.id,
+				sticker.file_id,
+				reply_to_message_id=message.message_id,
+			)
+		else:
+			photo = open('doge.jpg', 'rb')
+			bot.send_photo(
+				message.chat.id,
+				photo,
+				reply_to_message_id=message.message_id,
+			)
 
 
 bot.polling()
