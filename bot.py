@@ -8,7 +8,7 @@ from telebot.types import Sticker
 bot = telebot.TeleBot(settings.TELEGRAM_TOKEN)
 tool = language_tool_python.LanguageToolPublicAPI('ru-RU')
 
-sticker_set = bot.get_sticker_set('Stickerms')
+sticker_set = bot.get_sticker_set('DoggoStickerms')
 
 if sticker_set:
 	stickers = sticker_set.stickers
