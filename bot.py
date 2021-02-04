@@ -30,32 +30,45 @@ def contains_misspelling(text: str):
 
 
 @bot.message_handler(func=lambda message: True)
-def echo_all(message):
-    if contains_misspelling(message.text) and random.random() > 0.8:
-        if sticker_set:
-            sticker: Sticker = random.choice(sticker_set.stickers)
-            bot.send_sticker(
-                message.chat.id,
-                sticker.file_id,
-                reply_to_message_id=message.message_id,
-            )
-        else:
-            photo = open('doge.jpg', 'rb')
-            bot.send_photo(
-                message.chat.id,
-                photo,
-                reply_to_message_id=message.message_id,
-            )
+def echo_all(message: Message) -> None:
+    if is_misspelled(message.text):
+        misspelled_reply(message)
+
+    if is_aggressive(message.text):
+        aggressive_reply(message)
 
 
-@bot.message_handler(func=lambda message: True)
-def aggressive_handler(message: Message):
-    if letter_counter(message.text, letter=')') >= 2 and letter_counter(message.text, letter='0') >= 1:
-        bot.reply_to(
-            message,
-            random.choice(
-                ['да ты заебаааал', 'ой, иди нахуй а', 'иди нахер, блин', 'нормас']
-            )
+def is_aggressive(text: str) -> bool:
+    return letter_counter(text, letter=')') >= 2 and letter_counter(text, letter='0') >= 1
+
+
+def is_misspelled(text: str) -> bool:
+    return contains_misspelling(text) and random.random() > 0.8
+
+
+def aggressive_reply(message: Message) -> None:
+    bot.reply_to(
+        message,
+        random.choice(
+            ['да ты заебаааал', 'ой, иди нахуй а', 'иди нахер, блин', 'нормас']
+        )
+    )
+
+
+def misspelled_reply(message: Message) -> None:
+    if sticker_set:
+        sticker: Sticker = random.choice(sticker_set.stickers)
+        bot.send_sticker(
+            message.chat.id,
+            sticker.file_id,
+            reply_to_message_id=message.message_id,
+        )
+    else:
+        photo = open('doge.jpg', 'rb')
+        bot.send_photo(
+            message.chat.id,
+            photo,
+            reply_to_message_id=message.message_id,
         )
 
 
