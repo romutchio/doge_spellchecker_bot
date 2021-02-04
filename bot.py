@@ -2,7 +2,7 @@ import random
 
 import language_tool_python
 import telebot
-from telebot.types import Sticker
+from telebot.types import Sticker, Message
 
 from config import settings
 
@@ -31,7 +31,7 @@ def contains_misspelling(text: str):
 
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
-    if contains_misspelling(message.text):
+    if contains_misspelling(message.text) and random.random() > 0.8:
         if sticker_set:
             sticker: Sticker = random.choice(sticker_set.stickers)
             bot.send_sticker(
@@ -46,6 +46,17 @@ def echo_all(message):
                 photo,
                 reply_to_message_id=message.message_id,
             )
+
+
+@bot.message_handler(func=lambda message: True)
+def aggressive_handler(message: Message):
+    if letter_counter(message.text, letter=')') >= 2 and letter_counter(message.text, letter='0') >= 1:
+        bot.reply_to(
+            message,
+            random.choice(
+                ['да ты заебаааал', 'ой, иди нахуй а', 'иди нахер, блин', 'нормас']
+            )
+        )
 
 
 bot.polling()
