@@ -43,7 +43,7 @@ def is_aggressive(text: str) -> bool:
 
 
 def is_misspelled(text: str) -> bool:
-    return contains_misspelling(text) and random.random() > 0.8
+    return contains_misspelling(text) and random.random() > 0.7
 
 
 def aggressive_reply(message: Message) -> None:
