@@ -3,4 +3,4 @@
 Бот, который отправляет Doge, когда ты опечатался
 
 [Стикер-пак](https://t.me/addstickers/DoggoStickerms)  
-[Бот](https://t.me/DogeSpell)
+[Бот](https://t.me/DogeSpellBot)
