@@ -24,9 +24,10 @@ def contains_misspelling(text: str):
     for match in matches:
         if match.replacements:
             replacement = match.replacements[0]
-            excess_letter_count = letter_counter(text) - letter_counter(replacement)
+            word = text[match.offset:match.offset + match.errorLength]
+            excess_letter_count = letter_counter(word) - letter_counter(replacement)
             if match.ruleIssueType == 'misspelling' and excess_letter_count > 0 \
-                    and len(text) == len(replacement) + excess_letter_count:
+                    and len(word) == len(replacement) + excess_letter_count:
                 return True
     return False
 
