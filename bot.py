@@ -25,7 +25,8 @@ def contains_misspelling(text: str):
         if match.replacements:
             replacement = match.replacements[0]
             excess_letter_count = letter_counter(text) - letter_counter(replacement)
-            if match.ruleIssueType == 'misspelling' and excess_letter_count > 0 and len(text) == len(replacement) + excess_letter_count:
+            if match.ruleIssueType == 'misspelling' and excess_letter_count > 0 \
+                    and len(text) == len(replacement) + excess_letter_count:
                 return True
     return False
 
@@ -44,7 +45,7 @@ def is_aggressive(text: str) -> bool:
 
 
 def is_misspelled(text: str) -> bool:
-    return contains_misspelling(text) and random.random() > 0.7
+    return contains_misspelling(text)
 
 
 def aggressive_reply(message: Message) -> None:
