@@ -1,6 +1,8 @@
 # doge_spellchecker_bot
 
-Бот, который отправляет Doge, когда ты опечатался
+![Cheems](CheemsBig.png)
+
+Бот, который отправляет Cheems, когда ты опечамтался
 
 [Стикер-пак](https://t.me/addstickers/DoggoStickerms)  
 [Бот](https://t.me/DogeSpellBot)
