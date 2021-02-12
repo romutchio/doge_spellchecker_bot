@@ -91,13 +91,13 @@ develop = false
 
 [package.source]
 type = "git"
-url = "https://github.com/Koziev/rusyllab"
+url = "https://github.com/Koziev/rusyllab.git"
 reference = "master"
 resolved_reference = "c5d0ea405e9cc8233bd65503c26c0d2ad8b5cb57"
 
 [[package]]
 name = "tqdm"
-version = "4.56.0"
+version = "4.56.2"
 description = "Fast, Extensible Progress Meter"
 category = "main"
 optional = false
@@ -123,7 +123,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "4e05abe85488a9896c42401342847213a300856f8981dd67dfc77f17f2c11432"
+content-hash = "b38385fa61ea17ec29edc60751e1ddea738847276686f7d96f7c07ec561e1749"
 
 [metadata.files]
 certifi = [
@@ -175,8 +175,8 @@ requests = [
 ]
 rusyllab = []
 tqdm = [
-    {file = "tqdm-4.56.0-py2.py3-none-any.whl", hash = "sha256:4621f6823bab46a9cc33d48105753ccbea671b68bab2c50a9f0be23d4065cb5a"},
-    {file = "tqdm-4.56.0.tar.gz", hash = "sha256:fe3d08dd00a526850568d542ff9de9bbc2a09a791da3c334f3213d8d0bbbca65"},
+    {file = "tqdm-4.56.2-py2.py3-none-any.whl", hash = "sha256:a89be573bfddb81bb0b395a416d5e55e3ecc73ce95a368a4f6360bedea33195e"},
+    {file = "tqdm-4.56.2.tar.gz", hash = "sha256:11d544652edbdfc9cc41aa4c8a5c166513e279f3f2d9f1a9e1c89935b51de6ff"},
 ]
 urllib3 = [
     {file = "urllib3-1.26.3-py2.py3-none-any.whl", hash = "sha256:1b465e494e3e0d8939b50680403e3aedaa2bc434b7d5af64dfd3c958d7f5ae80"},
