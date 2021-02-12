@@ -42,7 +42,7 @@ def echo_all(message: Message) -> None:
     if is_aggressive(message.text):
         aggressive_reply(message)
 
-    if message.text.contains('ауф'):
+    if 'ауф' in message.text:
         bot.reply_to(message, random.choice(parse_auf()))
 
 
