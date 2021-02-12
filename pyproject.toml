@@ -9,7 +9,7 @@ python = "^3.8"
 language-tool-python = "^2.5.2"
 pyTelegramBotAPI = "^3.7.6"
 pydantic = "^1.7.3"
-rusyllab = {git = "https://github.com/Koziev/rusyllab"}
+rusyllab = {git = "https://github.com/Koziev/rusyllab.git"}
 
 [tool.poetry.dev-dependencies]
 
