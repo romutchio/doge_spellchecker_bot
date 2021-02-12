@@ -2,7 +2,8 @@ import random
 
 import language_tool_python
 import telebot
-import rusyllab
+import requests
+from bs4 import BeautifulSoup
 from telebot.types import Sticker, Message
 
 from config import settings
@@ -41,8 +42,8 @@ def echo_all(message: Message) -> None:
     if is_aggressive(message.text):
         aggressive_reply(message)
 
-    if is_possible_haiku(message.text):
-        haiku_reply(message)
+    if message.text.contains('ауф'):
+        bot.reply_to(message, random.choice(parse_auf()))
 
 
 def is_aggressive(text: str) -> bool:
@@ -51,10 +52,6 @@ def is_aggressive(text: str) -> bool:
 
 def is_misspelled(text: str) -> bool:
     return contains_misspelling(text)
-
-
-def is_possible_haiku(text: str) -> bool:
-    return len(rusyllab.split_words(text.split())) == 17
 
 
 def aggressive_reply(message: Message) -> None:
@@ -83,12 +80,10 @@ def misspelled_reply(message: Message) -> None:
         )
 
 
-def haiku_reply(message: Message) -> None:
-    syllables = rusyllab.split_words(message.text.split())
-    parts = [syllables[:5], syllables[5:12], syllables[12:17]]
-    parts = [''.join(x) for x in parts]
-    reply = '\n'.join(parts)
-    bot.reply_to(message, reply)
+def parse_auf():
+    response = requests.get('https://citatko.com/bez-rubriki/auf-tsitaty-pro-volkov')
+    soup = BeautifulSoup(response.content, "html.parser")
+    return [x.text for x in soup.findAll('div', attrs={'class': 'ads-color-box'})]
 
 
 bot.polling()
