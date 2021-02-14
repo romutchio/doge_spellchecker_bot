@@ -1,10 +1,12 @@
 import random
+from typing import List
 
 import language_tool_python
 import telebot
 import requests
 from bs4 import BeautifulSoup
 from telebot.types import Sticker, Message
+import re
 
 from config import settings
 
@@ -45,6 +47,10 @@ def echo_all(message: Message) -> None:
     if 'ауф' in message.text.lower():
         bot.reply_to(message, random.choice(parse_auf()))
 
+    success, haiku = try_get_haiku(message.text)
+    if success:
+        bot.reply_to(message, haiku)
+
 
 def is_aggressive(text: str) -> bool:
     return letter_counter(text, letter=')') >= 2 and letter_counter(text, letter='0') >= 1
@@ -84,6 +90,52 @@ def parse_auf():
     response = requests.get('https://citatko.com/bez-rubriki/auf-tsitaty-pro-volkov')
     soup = BeautifulSoup(response.content, "html.parser")
     return [x.text for x in soup.findAll('div', attrs={'class': 'ads-color-box'})]
+
+
+VOWELS_REGEX = re.compile(r'[аеёиоуыэюя]')
+NUMBERS_REGEX = re.compile(r'\d')
+SPACES_REGEX = re.compile(r'\s')
+
+
+HAIKU_STRUCTURE = [5, 7, 5]
+
+
+def try_get_haiku(text: str) -> (bool, str):
+    if count_vowels(text) != 17:
+        return False
+
+    if has_numbers(text):
+        return False
+
+    words: List[str] = SPACES_REGEX.split(text)
+    line: int = 0
+    line_vowels: int = 0
+    haiku: List[List[str]] = [[], [], []]
+
+    for word in words:
+        haiku[line].append(word)
+        line_vowels += count_vowels(word)
+
+        if line_vowels > HAIKU_STRUCTURE[line]:
+            return False
+
+        if line_vowels == HAIKU_STRUCTURE[line]:
+            line += 1
+            line_vowels = 0
+
+    return True, '\n'.join(map(lambda l: ' '.join(l), haiku))
+
+
+def count_vowels(text: str) -> int:
+    return len(VOWELS_REGEX.findall(text))
+
+
+def has_numbers(text: str) -> bool:
+    return bool(NUMBERS_REGEX.search(text))
+
+
+def haiku_reply(message: Message, haiku: str) -> None:
+    bot.reply_to(message, haiku)
 
 
 bot.polling()
