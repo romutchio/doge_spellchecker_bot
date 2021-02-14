@@ -102,10 +102,10 @@ HAIKU_STRUCTURE = [5, 7, 5]
 
 def try_get_haiku(text: str) -> (bool, str):
     if count_vowels(text) != 17:
-        return False
+        return False, None
 
     if has_numbers(text):
-        return False
+        return False, None
 
     words: List[str] = SPACES_REGEX.split(text)
     line: int = 0
@@ -117,7 +117,7 @@ def try_get_haiku(text: str) -> (bool, str):
         line_vowels += count_vowels(word)
 
         if line_vowels > HAIKU_STRUCTURE[line]:
-            return False
+            return False, None
 
         if line_vowels == HAIKU_STRUCTURE[line]:
             line += 1
