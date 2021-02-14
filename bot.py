@@ -2,6 +2,8 @@ import random
 
 import language_tool_python
 import telebot
+import requests
+from bs4 import BeautifulSoup
 from telebot.types import Sticker, Message
 
 from config import settings
@@ -40,6 +42,9 @@ def echo_all(message: Message) -> None:
     if is_aggressive(message.text):
         aggressive_reply(message)
 
+    if 'ауф' in message.text:
+        bot.reply_to(message, random.choice(parse_auf()))
+
 
 def is_aggressive(text: str) -> bool:
     return letter_counter(text, letter=')') >= 2 and letter_counter(text, letter='0') >= 1
@@ -73,6 +78,12 @@ def misspelled_reply(message: Message) -> None:
             photo,
             reply_to_message_id=message.message_id,
         )
+
+
+def parse_auf():
+    response = requests.get('https://citatko.com/bez-rubriki/auf-tsitaty-pro-volkov')
+    soup = BeautifulSoup(response.content, "html.parser")
+    return [x.text for x in soup.findAll('div', attrs={'class': 'ads-color-box'})]
 
 
 bot.polling()
