@@ -92,9 +92,9 @@ def parse_auf():
     return [x.text for x in soup.findAll('div', attrs={'class': 'ads-color-box'})]
 
 
-VOWELS_REGEX = re.compile(r'[аеёиоуыэюя]')
+VOWELS_REGEX = re.compile(r'[аеёиоуыэюя]', re.IGNORECASE)
 NUMBERS_REGEX = re.compile(r'\d')
-SPACES_REGEX = re.compile(r'\s')
+SPACES_REGEX = re.compile(r'\s+')
 
 
 HAIKU_STRUCTURE = [5, 7, 5]
